@@ -572,12 +572,14 @@ function saveCart(cart) {
 }
 
 function updateCartBadge() {
-  const badge = document.getElementById('cart-badge-count');
-  if (!badge) return;
+  const badges = [document.getElementById('cart-badge-count'), document.getElementById('mobile-cart-badge-count')].filter(Boolean);
+  if (badges.length === 0) return;
   const cart = getCart();
   const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  badge.textContent = totalCount;
-  badge.style.display = totalCount > 0 ? 'inline-block' : 'none';
+  badges.forEach((badge) => {
+    badge.textContent = totalCount;
+    badge.style.display = totalCount > 0 ? 'inline-block' : 'none';
+  });
 }
 
 // Custom In-Page Verification Modal (Promise-based, 0 browser popups)

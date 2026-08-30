@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Malayalam:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=1788117323">
+  <link rel="stylesheet" href="styles.css?v=1788117554">
 </head>
 <body>
 
@@ -19,8 +19,8 @@
       </a>
 
       <div class="header-actions">
-        <!-- Language Selector (Desktop) -->
-        <div class="language-picker desktop-only-action">
+        <!-- Language Selector (Always visible on header) -->
+        <div class="language-picker" id="header-language-picker">
           <svg class="globe-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -35,8 +35,8 @@
           </select>
         </div>
 
-        <!-- Cart Button -->
-        <a href="cart.html" class="btn btn-cart" id="header-cart-btn" aria-label="Cart">
+        <!-- Cart Button (Desktop only) -->
+        <a href="cart.html" class="btn btn-cart desktop-only-action" id="header-cart-btn" aria-label="Cart">
           <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"></circle>
             <circle cx="20" cy="21" r="1"></circle>
@@ -46,7 +46,7 @@
           <span class="cart-badge" id="cart-badge-count">0</span>
         </a>
 
-        <!-- Login / Signup Link Button (Desktop) -->
+        <!-- Login / Signup Link Button (Desktop only) -->
         <a href="login-signup.html" class="btn btn-login desktop-only-action" id="login-link">
           <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -55,12 +55,18 @@
           <span data-i18n="login">دخول / تسجيل</span>
         </a>
 
-        <!-- Burger Toggle Button (Mobile) -->
+        <!-- Burger / Close Toggle Button (Mobile) -->
         <button type="button" class="btn-burger-menu" id="btn-mobile-menu-toggle" aria-label="Toggle Navigation Menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Burger Icon -->
+          <svg class="icon-burger" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <!-- Close (X) Icon -->
+          <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </div>
@@ -68,23 +74,22 @@
 
     <!-- Mobile Nav Dropdown Panel -->
     <div class="mobile-nav-dropdown" id="mobile-nav-menu">
+      <!-- Cart Link in mobile menu -->
       <div class="mobile-nav-item">
-        <div class="language-picker">
-          <svg class="globe-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-          <select id="mobile-language-select" class="language-select-control" aria-label="Select Language">
-            <option value="ar" selected>العربية</option>
-            <option value="en">English</option>
-            <option value="ur">اردو (Pakistani)</option>
-            <option value="hi">हिन्दी (Hindi)</option>
-            <option value="ml">മലയാളം (Malayalam)</option>
-          </select>
-        </div>
+        <a href="cart.html" class="btn btn-cart" id="mobile-cart-btn">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span data-i18n="cartTitle">السلة</span>
+          </div>
+          <span class="cart-badge" id="mobile-cart-badge-count">0</span>
+        </a>
       </div>
 
+      <!-- Auth Link in mobile menu -->
       <div class="mobile-nav-item">
         <a href="login-signup.html" class="btn btn-login" id="mobile-login-link">
           <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -122,7 +127,7 @@
 
       <!-- Cart Layout (Grid of items + Summary checkout card) -->
       <div class="cart-layout" id="cart-content-wrapper">
-        <!-- Rendered dynamically by script.js?v=1788117323 -->
+        <!-- Rendered dynamically by script.js?v=1788117554 -->
       </div>
 
     </div>
@@ -167,6 +172,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=1788117323"></script>
+  <script src="script.js?v=1788117554"></script>
 </body>
 </html>

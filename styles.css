@@ -243,6 +243,18 @@ html[lang="ml"] body {
   height: 28px;
 }
 
+.btn-burger-menu .icon-close {
+  display: none;
+}
+
+.btn-burger-menu.active .icon-burger {
+  display: none;
+}
+
+.btn-burger-menu.active .icon-close {
+  display: block;
+}
+
 /* Mobile Dropdown Panel */
 .mobile-nav-dropdown {
   display: none;
@@ -268,13 +280,11 @@ html[lang="ml"] body {
   width: 100%;
 }
 
-.mobile-nav-item .language-picker {
+.mobile-nav-item .btn-cart {
   width: 100%;
   justify-content: space-between;
-}
-
-.mobile-nav-item .language-picker select {
-  width: 100%;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
 }
 
 .mobile-nav-item .btn-login,
