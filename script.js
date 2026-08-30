@@ -1142,51 +1142,70 @@ function hideAlert(alertElId) {
   }
 }
 
-// Session Management & Header UI Rendering
+// Session Management & Header UI Rendering (Desktop & Mobile)
 function setupUserSessionUI() {
   const userStr = localStorage.getItem('twareed_user');
-  const loginLink = document.getElementById('login-link');
+  const loginLinks = [document.getElementById('login-link'), document.getElementById('mobile-login-link')].filter(Boolean);
   const lang = localStorage.getItem('twareed_lang') || 'ar';
   const t = translations[lang] || translations.ar;
 
-  if (!loginLink) return;
+  loginLinks.forEach((link) => {
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        link.className = link.id === 'mobile-login-link' ? 'btn btn-logout' : 'btn btn-logout desktop-only-action';
+        link.href = '#logout';
+        link.innerHTML = `
+          <svg class="logout-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span data-i18n="logout">${t.logout || 'تسجيل الخروج'}</span>
+        `;
+        link.title = `${t.welcomeUser || 'مرحباً بك،'} ${user.full_name} (${user.city})`;
 
-  if (userStr) {
-    try {
-      const user = JSON.parse(userStr);
-      loginLink.className = 'btn btn-logout';
-      loginLink.href = '#logout';
-      loginLink.innerHTML = `
-        <svg class="logout-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-          <polyline points="16 17 21 12 16 7"></polyline>
-          <line x1="21" y1="12" x2="9" y2="12"></line>
+        link.onclick = (e) => {
+          e.preventDefault();
+          localStorage.removeItem('twareed_user');
+          localStorage.removeItem('twareed_flash_msg');
+          window.location.href = '/';
+        };
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      link.className = link.id === 'mobile-login-link' ? 'btn btn-login' : 'btn btn-login desktop-only-action';
+      link.href = 'login-signup.html';
+      link.innerHTML = `
+        <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
         </svg>
-        <span data-i18n="logout">${t.logout || 'تسجيل الخروج'}</span>
+        <span data-i18n="login">${t.login}</span>
       `;
-      loginLink.title = `${t.welcomeUser || 'مرحباً بك،'} ${user.full_name} (${user.city})`;
-
-      loginLink.onclick = (e) => {
-        e.preventDefault();
-        localStorage.removeItem('twareed_user');
-        localStorage.removeItem('twareed_flash_msg');
-        window.location.href = '/';
-      };
-    } catch (e) {
-      console.error(e);
+      link.onclick = null;
     }
-  } else {
-    loginLink.className = 'btn btn-login';
-    loginLink.href = 'login-signup.html';
-    loginLink.innerHTML = `
-      <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>
-      <span data-i18n="login">${t.login}</span>
-    `;
-    loginLink.onclick = null;
-  }
+  });
+}
+
+function setupMobileBurgerMenu() {
+  const toggleBtn = document.getElementById('btn-mobile-menu-toggle');
+  const menuDropdown = document.getElementById('mobile-nav-menu');
+  if (!toggleBtn || !menuDropdown) return;
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleBtn.classList.toggle('active');
+    menuDropdown.classList.toggle('active');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menuDropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
+      toggleBtn.classList.remove('active');
+      menuDropdown.classList.remove('active');
+    }
+  });
 }
 
 function checkFlashMessage() {
@@ -1200,17 +1219,21 @@ function checkFlashMessage() {
 // Initial setup on page load
 document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('twareed_lang') || 'ar';
-  if (languageSelect) {
-    languageSelect.value = savedLang;
-    updateLanguage(savedLang);
+  const langSelects = [document.getElementById('language-select'), document.getElementById('mobile-language-select')].filter(Boolean);
 
-    languageSelect.addEventListener('change', (e) => {
-      updateLanguage(e.target.value);
+  langSelects.forEach((sel) => {
+    sel.value = savedLang;
+    sel.addEventListener('change', (e) => {
+      const newLang = e.target.value;
+      langSelects.forEach(s => s.value = newLang);
+      updateLanguage(newLang);
       setupUserSessionUI();
     });
-  }
+  });
 
+  updateLanguage(savedLang);
   setupUserSessionUI();
+  setupMobileBurgerMenu();
   updateCartBadge();
   renderCartPage();
   checkFlashMessage();

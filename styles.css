@@ -219,6 +219,82 @@ html[lang="ml"] body {
   line-height: 1.2;
 }
 
+/* Mobile Burger Menu Button & Dropdown */
+.btn-burger-menu {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.btn-burger-menu:hover,
+.btn-burger-menu.active {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-burger-menu svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Mobile Dropdown Panel */
+.mobile-nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  background-color: #0B172B;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  padding: 1.25rem 1.5rem;
+  z-index: 999;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: slideDown 0.2s ease-out;
+}
+
+.mobile-nav-dropdown.active {
+  display: flex;
+}
+
+.mobile-nav-item {
+  width: 100%;
+}
+
+.mobile-nav-item .language-picker {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.mobile-nav-item .language-picker select {
+  width: 100%;
+}
+
+.mobile-nav-item .btn-login,
+.mobile-nav-item .btn-logout {
+  width: 100%;
+  justify-content: center;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .btn-burger-menu {
+    display: inline-flex;
+  }
+
+  .desktop-only-action {
+    display: none !important;
+  }
+}
+
 /* Cart Page Styles */
 .cart-page-header {
   margin-bottom: 2rem;
@@ -1601,75 +1677,25 @@ html[dir="rtl"] .back-link svg {
 }
 
 /* Responsive adjustments */
-@media screen and (max-width: 768px) {
-  .site-header {
-    padding: 0;
-  }
-
+@media (max-width: 768px) {
   .header-container {
-    min-height: 64px !important;
-    padding: 0.35rem 0.75rem !important;
-    gap: 0.5rem !important;
-  }
-
-  .container {
-    padding: 0 1rem;
+    min-height: 90px;
   }
 
   .site-logo {
-    height: 44px !important;
-    max-width: 130px !important;
-  }
-
-  .header-actions {
-    gap: 0.4rem !important;
-  }
-
-  .language-picker {
-    padding: 0 0.4rem !important;
-  }
-
-  .language-picker select {
-    padding: 0.4rem 0.2rem 0.4rem 0 !important;
-    font-size: 0.8rem !important;
-  }
-
-  .globe-icon {
-    width: 14px !important;
-    height: 14px !important;
-    margin-inline-end: 0.25rem !important;
-  }
-
-  .btn-cart {
-    padding: 0.4rem 0.65rem !important;
-    font-size: 0.825rem !important;
-    gap: 0.3rem !important;
-  }
-
-  .btn-cart .cart-icon {
-    width: 15px !important;
-    height: 15px !important;
-  }
-
-  .cart-badge {
-    font-size: 0.7rem !important;
-    padding: 0.05rem 0.35rem !important;
-    min-width: 1rem !important;
-  }
-
-  .btn-login, .btn-logout {
-    padding: 0.4rem 0.7rem !important;
-    font-size: 0.825rem !important;
-    gap: 0.3rem !important;
-  }
-
-  .btn-login .user-icon, .btn-logout .logout-icon {
-    width: 15px !important;
-    height: 15px !important;
+    height: 70px;
   }
 
   .footer-logo {
-    height: 55px;
+    height: 70px;
+  }
+
+  .header-actions {
+    gap: 0.75rem;
+  }
+
+  .btn-login span {
+    display: inline-block;
   }
 
   .footer-top {
@@ -1685,46 +1711,5 @@ html[dir="rtl"] .back-link svg {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
-  }
-}
-
-@media screen and (max-width: 520px) {
-  .header-container {
-    min-height: 58px !important;
-    padding: 0.25rem 0.5rem !important;
-    gap: 0.35rem !important;
-  }
-
-  .site-logo {
-    height: 38px !important;
-    max-width: 110px !important;
-  }
-
-  .header-actions {
-    gap: 0.3rem !important;
-  }
-
-  .language-picker {
-    padding: 0 0.3rem !important;
-  }
-
-  .language-picker select {
-    font-size: 0.75rem !important;
-    padding: 0.35rem 0 !important;
-    max-width: 65px !important;
-  }
-
-  .btn-cart {
-    padding: 0.35rem 0.5rem !important;
-    font-size: 0.78rem !important;
-  }
-
-  .btn-cart span:not(.cart-badge) {
-    display: none !important; /* Icon + badge only */
-  }
-
-  .btn-login, .btn-logout {
-    padding: 0.35rem 0.55rem !important;
-    font-size: 0.78rem !important;
   }
 }
