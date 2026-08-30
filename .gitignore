@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+
+# Environment secrets
+.env
+*.env.local
+
+# Local Demo DB & Logs
+*.sqlite
+*.sqlite3
+*.log
+.DS_Store
