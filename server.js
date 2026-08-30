@@ -15,6 +15,11 @@ app.use(express.static(path.join(__dirname)));
 // Initialize Database on Startup
 db.initDatabase();
 
+// Route /twareed and / to index.html
+app.get(['/twareed', '/twareed/'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Health Check API
 app.get('/api/health', async (req, res) => {
   res.json({

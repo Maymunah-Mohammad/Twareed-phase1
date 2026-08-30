@@ -784,7 +784,7 @@ function renderCartPage() {
         </svg>
         <h2 class="empty-cart-title">${currentLang === 'ar' ? 'سلة الطلبات فارغة' : 'Your cart is empty'}</h2>
         <p class="empty-cart-desc">${currentLang === 'ar' ? 'لم تقم بإضافة أي قطع غيار إلى السلة بعد.' : "You haven't added any auto spare parts to your cart yet."}</p>
-        <a href="/" class="btn btn-login" style="display: inline-flex; padding: 0.8rem 1.75rem;">
+        <a href="/twareed" class="btn btn-login" style="display: inline-flex; padding: 0.8rem 1.75rem;">
           ${currentLang === 'ar' ? 'تصفح قطع الغيار الآن' : 'Browse Spare Parts'}
         </a>
       </div>
@@ -1171,7 +1171,7 @@ function setupUserSessionUI() {
           e.preventDefault();
           localStorage.removeItem('twareed_user');
           localStorage.removeItem('twareed_flash_msg');
-          window.location.href = '/';
+          window.location.href = '/twareed';
         };
       } catch (e) {
         console.error(e);
@@ -1316,7 +1316,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const welcomeMsg = `مرحباً بك، ${data.user.full_name}! ${t.accountCreatedSuccess || 'تم إنشاء حسابك وتسجيل دخولك بنجاح في سلطنة عمان!'}`;
           localStorage.setItem('twareed_flash_msg', welcomeMsg);
 
-          window.location.href = '/';
+          window.location.href = '/twareed';
         } else {
           showAlert('signup-alert', data.message || 'حدث خطأ أثناء التسجيل', 'error');
         }
@@ -1359,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const welcomeMsg = `مرحباً بعودتك، ${data.user.full_name}!`;
           localStorage.setItem('twareed_flash_msg', welcomeMsg);
 
-          window.location.href = '/';
+          window.location.href = '/twareed';
         } else {
           showAlert('login-alert', data.message || 'بيانات الدخول غير صحيحة', 'error');
         }
